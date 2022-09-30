@@ -12,7 +12,7 @@ const v2Routes = require('./routes/v2.js');
 //auth-server const's
 // 3rd Party Resources
 const cors = require('cors');
-const morgan = require('morgan');
+
 
 // Esoteric Resources
 const authRoutes = require('./routes/routes.js');
@@ -31,7 +31,6 @@ app.use('/api/v2',v2Routes);
 
 // App Level MW
 app.use(cors());
-app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use(authRoutes);
