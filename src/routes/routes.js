@@ -47,14 +47,22 @@ authRouter.post('/emails', bearerAuth, async (req, res, next) => {
   };
 
   const sendMail = await emails.sendEmail(emailInfo);
-  console.log('Info returned after sending an email:  ',sendMail);
+  //   console.log('Info returned after sending an email:  ',sendMail);
   let emailRecord = await emails.create({
     foreignKey: emailInfo.user.id,
     to:emailInfo.information.to,
     subject: emailInfo.information.subject,
     body:emailInfo.information.text,
   });
+  console.log('EMAIL RECORD:   ', emailRecord);
 
-  res.status(200).send(sendMail);
+  res.status(200).send(emailRecord);
+});
+
+authRouter.get('./emails', async (req,res,next)=>{
+  //get the user id, get all emails from DB with matching foreign key
+  const user = req.user;
+  const receivedEmails = await emails.findAll({});
+  res.status(200).json(receivedEmails);
 });
 module.exports = authRouter;

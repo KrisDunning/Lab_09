@@ -41,7 +41,7 @@ const sendMail= async (emailInfo) => {
   console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
 
 };
-sendMail().catch(console.error);
+
 
 
 
