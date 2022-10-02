@@ -4,6 +4,7 @@ const express = require('express');
 const authRouter = express.Router();
 
 const { users } = require('../models');
+const {emails} = require('../models');
 const basicAuth = require('../middleware/basic.js');
 const bearerAuth = require('../middleware/bearer.js');
 const permissions = require('../middleware/acl.js');
@@ -39,4 +40,21 @@ authRouter.get('/secret', bearerAuth, async (req, res, next) => {
   res.status(200).send('Welcome to the secret area');
 });
 
+authRouter.post('/emails', bearerAuth, async (req, res, next) => {
+  const emailInfo={
+    user: req.user,
+    information:req.body,
+  };
+
+  const sendMail = await emails.sendEmail(emailInfo);
+  console.log('Info returned after sending an email:  ',sendMail);
+  let emailRecord = await emails.create({
+    foreignKey: emailInfo.user.id,
+    to:emailInfo.information.to,
+    subject: emailInfo.information.subject,
+    body:emailInfo.information.text,
+  });
+
+  res.status(200).send(sendMail);
+});
 module.exports = authRouter;
