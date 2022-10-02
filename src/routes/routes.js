@@ -59,7 +59,7 @@ authRouter.post('/emails', bearerAuth, async (req, res, next) => {
   res.status(200).send(emailRecord);
 });
 
-authRouter.get('./emails', async (req,res,next)=>{
+authRouter.get('/emails', bearerAuth, async (req,res,next)=>{
   //get the user id, get all emails from DB with matching foreign key
   const user = req.user;
   const receivedEmails = await emails.findAll({});
