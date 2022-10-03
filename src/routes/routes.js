@@ -1,8 +1,11 @@
 'use strict';
-
+/**
+   * Routes Collection
+   * @module authRouter
+   *  @return {module} Returns authRouter module
+   */
 const express = require('express');
 const authRouter = express.Router();
-
 const { users } = require('../models');
 const {emails} = require('../models');
 const basicAuth = require('../middleware/basic.js');
@@ -16,6 +19,7 @@ authRouter.post('/signup', async (req, res, next) => {
       user: userRecord,
       token: userRecord.token,
     };
+    console.log('SIGN UP REQUEST:  ', req);
     res.status(201).json(output);
   } catch (e) {
     next(e.message);
@@ -72,4 +76,5 @@ authRouter.get('/emails', bearerAuth, async (req,res,next)=>{
   const receivedEmails = await emails.findAll({});
   res.status(200).json(receivedEmails);
 });
+
 module.exports = authRouter;

@@ -1,5 +1,10 @@
 'use strict';
-// AUTH MIDDLEWARE
+/**
+   * Bearer Authorization
+   * @module Bearer
+   * @param {object} req.headers.authorization - The request must contain the users encoded login details
+   *  @return {NextFunction|error} The next() function is called if role matches. Else "Invalid Login".
+   */
 const { users } = require('../models');
 
 module.exports = async (req, res, next) => {

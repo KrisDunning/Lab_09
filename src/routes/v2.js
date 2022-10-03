@@ -1,8 +1,11 @@
 'use strict';
-
+/**
+   * V2 Routes
+   * @module v2Routes
+   *
+   */
 const express = require('express');
 const dataModules = require('../models');
-
 const router = express.Router();
 
 router.param('model', (req, res, next) => {
@@ -50,6 +53,5 @@ async function handleDelete(req, res) {
   let deletedRecord = await req.model.delete(id);
   res.status(200).json(deletedRecord);
 }
-
 
 module.exports = router;

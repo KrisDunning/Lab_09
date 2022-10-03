@@ -1,12 +1,9 @@
 'use strict';
-
-/*
-  In this example, we first declare a funcion and then explicitly export it
-
-  Because we'll be building out an API that works with JSON, let's format
-  our response as a JSON object
-*/
-
+/**
+ * 404 handler
+ * @module 404
+ * @return {(string|object)} 404 message
+ */
 function handle404(req, res, next) {
 
   const errorObject = {
