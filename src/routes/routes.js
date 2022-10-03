@@ -46,22 +46,29 @@ authRouter.post('/emails', bearerAuth, async (req, res, next) => {
     information:req.body,
   };
 
-  const sendMail = await emails.sendEmail(emailInfo);
-  //   console.log('Info returned after sending an email:  ',sendMail);
+  const returnedInfo = await emails.sendEmail(emailInfo);
+  console.log('Info returned after sending an email:  ',returnedInfo);
   let emailRecord = await emails.create({
-    foreignKey: emailInfo.user.id,
     to:emailInfo.information.to,
     subject: emailInfo.information.subject,
     body:emailInfo.information.text,
+    UserId: emailInfo.user.id,
   });
   console.log('EMAIL RECORD:   ', emailRecord);
 
-  res.status(200).send(emailRecord);
+  res.status(200).send(returnedInfo.info.testURL);
+});
+
+authRouter.get('/emails/:id',bearerAuth, permissions('delete'), async (req,res,next)=>{
+  console.log('find by ID!!!!!!!!!!!!!');
+  console.log('req.params :   ', req.params);
+  //get the user id, get all emails from DB with matching foreign key
+  const receivedEmails = await emails.findAll({where:{UserId:req.params.id}});
+  res.status(200).json(receivedEmails);
 });
 
 authRouter.get('/emails', bearerAuth, async (req,res,next)=>{
-  //get the user id, get all emails from DB with matching foreign key
-  const user = req.user;
+  console.log('get all emails !!!!!!!!!!');
   const receivedEmails = await emails.findAll({});
   res.status(200).json(receivedEmails);
 });

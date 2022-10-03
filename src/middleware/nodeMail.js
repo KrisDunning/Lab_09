@@ -34,11 +34,13 @@ const sendMail= async (emailInfo) => {
     from: emailInfo.user.email, // sender address
     to: emailInfo.information.to, // list of receivers
     subject: emailInfo.information.subject, // Subject line
-    text: emailInfo.information.text, // plain text body
+    text: emailInfo.information.body, // plain text body
   });
-
+  info.testURL=nodemailer.getTestMessageUrl(info);
   console.log('Message sent: %s', info.messageId);
   console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
+  return ({info});
+
 
 };
 

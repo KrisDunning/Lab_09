@@ -8,9 +8,14 @@ const { Sequelize, DataTypes } = require('sequelize');
 const DATABASE_URL = 'sqlite:memory';
 
 const sequelize = new Sequelize(DATABASE_URL);
+const users= userModel(sequelize, DataTypes);
+const emails = emailModel(sequelize, DataTypes);
+
+users.hasMany(emails);
+emails.belongsTo(users);
 
 module.exports = {
   db: sequelize,
-  users: userModel(sequelize, DataTypes),
-  emails: emailModel(sequelize, DataTypes),
+  users: users,
+  emails: emails,
 };

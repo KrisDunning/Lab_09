@@ -3,7 +3,6 @@ const sendMail = require('../middleware/nodeMail');
 
 const emailModel = (sequelize, DataTypes) => {
   const model = sequelize.define('emails', {
-    foreignKey: { type: DataTypes.INTEGER, required: true},
     to: {type: DataTypes.STRING},
     subject: {type: DataTypes.STRING},
     body: {type: DataTypes.STRING},
@@ -12,11 +11,8 @@ const emailModel = (sequelize, DataTypes) => {
 
   model.sendEmail= async function (emailInfo){
     console.log(emailInfo);
-    await sendMail(emailInfo);
-
+    return (await sendMail(emailInfo));
   };
-
-
   return model;
 };
 
