@@ -1,8 +1,12 @@
 'use strict';
-
+/**
+   * User Model
+   * @module UserModel
+   * @param {object}  - The model requires a username, password, role and email property
+   *  @return {model} - Returns User Model
+   */
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
 const SECRET = process.env.SECRET || 'secretstring';
 
 const userModel = (sequelize, DataTypes) => {
@@ -58,7 +62,6 @@ const userModel = (sequelize, DataTypes) => {
       throw new Error(e.message);
     }
   };
-
   return model;
 };
 

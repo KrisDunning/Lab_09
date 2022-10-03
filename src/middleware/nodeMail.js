@@ -1,24 +1,13 @@
 'use strict';
+/**
+   * NodeMailer middleware
+   * @module sendMail
+   *  @return {object} Returns information returned from the transporter of nodemailer
+   */
 const nodemailer = require('nodemailer');
-const emailDB = require ('../models');
 
-// before we hit email route
-// token auth
-// user object
-
-// set info object with to/from/subject/body
-
-//after send email
-// save the messageID, previewURL, body to DB.
-
-// async..await is not allowed in global scope, must use a wrapper
 const sendMail= async (emailInfo) => {
-  console.log('NodeMail emailInfo:   ',emailInfo);
-  // Generate test SMTP service account from ethereal.email
-  // Only needed if you don't have a real mail account for testing
   let testAccount = await nodemailer.createTestAccount();
-
-  // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
     host: 'smtp.ethereal.email',
     port: 587,
@@ -29,7 +18,6 @@ const sendMail= async (emailInfo) => {
     },
   });
 
-  // send mail with defined transport object
   let info = await transporter.sendMail({
     from: emailInfo.user.email, // sender address
     to: emailInfo.information.to, // list of receivers
@@ -37,14 +25,6 @@ const sendMail= async (emailInfo) => {
     text: emailInfo.information.body, // plain text body
   });
   info.testURL=nodemailer.getTestMessageUrl(info);
-  console.log('Message sent: %s', info.messageId);
-  console.log('Preview URL: %s', nodemailer.getTestMessageUrl(info));
   return ({info});
-
-
 };
-
-
-
-
 module.exports = sendMail;

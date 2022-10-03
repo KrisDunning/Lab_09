@@ -1,5 +1,9 @@
 'use strict';
-
+/**
+   * V1 Routes
+   * @module v1Routes
+   *
+   */
 const express = require('express');
 const dataModules = require('../models');
 
@@ -14,7 +18,6 @@ router.param('model', (req, res, next) => {
     next('Invalid Model');
   }
 });
-
 router.get('/:model', handleGetAll);
 router.get('/:model/:id', handleGetOne);
 router.post('/:model', handleCreate);
@@ -50,6 +53,5 @@ async function handleDelete(req, res) {
   let deletedRecord = await req.model.delete(id);
   res.status(200).json(deletedRecord);
 }
-
 
 module.exports = router;
