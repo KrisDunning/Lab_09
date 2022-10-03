@@ -46,14 +46,14 @@ authRouter.post('/emails', bearerAuth, async (req, res, next) => {
     user: req.user,
     information:req.body,
   };
-
+  console.log('routesjs: emailinfo', emailInfo);
   const returnedInfo = await emails.sendEmail(emailInfo);
   console.log('Info returned after sending an email:  ',returnedInfo);
   let emailRecord = await emails.create({
     to:emailInfo.information.to,
     subject: emailInfo.information.subject,
     body:emailInfo.information.text,
-    UserId: emailInfo.user.id,
+    // UserId: emailInfo.user.id,
   });
   console.log('EMAIL RECORD:   ', emailRecord);
 
@@ -73,4 +73,13 @@ authRouter.get('/emails', bearerAuth, async (req,res,next)=>{
   const receivedEmails = await emails.findAll({});
   res.status(200).json(receivedEmails);
 });
+
+authRouter.get('/users/:id', bearerAuth, async (req, res, next) => {
+  let record = await users.findOne({ where: { id: req.params.id }, include: emails });
+  res.status(200).send(record);
+});
+
+
+
 module.exports = authRouter;
+

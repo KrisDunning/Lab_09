@@ -11,8 +11,8 @@ const sequelize = new Sequelize(DATABASE_URL);
 const users= userModel(sequelize, DataTypes);
 const emails = emailModel(sequelize, DataTypes);
 
-users.hasMany(emails);
-emails.belongsTo(users);
+users.hasMany(emails, {foreignKey: 'userId', sourceKey: 'id'});
+emails.belongsTo(users, {foreignKey: 'userId', targetKey: 'id'});
 
 module.exports = {
   db: sequelize,

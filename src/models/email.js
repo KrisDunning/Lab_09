@@ -5,7 +5,8 @@ const emailModel = (sequelize, DataTypes) => {
   const model = sequelize.define('emails', {
     to: {type: DataTypes.STRING},
     subject: {type: DataTypes.STRING},
-    body: {type: DataTypes.STRING},
+    body: { type: DataTypes.STRING },
+    userId: { type: DataTypes.INTEGER},
   },
   );
 
