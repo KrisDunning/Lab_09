@@ -11,6 +11,7 @@ const permissions = require('../middleware/acl.js');
 
 authRouter.post('/signup', async (req, res, next) => {
   try {
+    console.log('from authrouter:', req.body);
     let userRecord = await users.create(req.body);
     const output = {
       user: userRecord,
