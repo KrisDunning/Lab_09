@@ -1,9 +1,9 @@
 'use strict';
 /**
-   * Index
-   * @module Index
-   *
-   */
+ * Index
+ * @module Index
+ *
+ */
 require('dotenv').config();
 const app = require('./src/server.js');
 const { db } = require('./src/models');
